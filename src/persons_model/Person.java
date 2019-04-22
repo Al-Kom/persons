@@ -67,8 +67,8 @@ public class Person {
 	}
 	
 	public String toString() {
-		String res = FIO + "|" + address + "|" + mobilePhoneNumber + 
-				"|" + homePhoneNumber;
+		String res = FIO + "," + address + "," + mobilePhoneNumber + 
+				"," + homePhoneNumber;
 		return res;
 	}
 	

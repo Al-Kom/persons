@@ -7,15 +7,28 @@ import javax.swing.table.AbstractTableModel;
 public class PersonsTableModel extends AbstractTableModel {
 	private final String[] columnNames = {"ФИО", "Адрес", "Моб. тел.", "Дом. тел."};
 	private ArrayList<Person> persons;
-	private int nodeNumberOnPage = 5;
-	private boolean cellsIsEditable = false;
+	private int personsOnPage = 5;
+	private boolean cellsIsEditable = true;
 	
 	public PersonsTableModel() {
 		persons = new ArrayList<Person>();
 	}
 	
+	public PersonsTableModel(Person[] persons) {
+		this.persons = new ArrayList<Person>();
+		if(persons.length != 0) {
+			this.addPerson(persons);
+		} else
+System.out.println("persons[] is null in PersonsTableModel(Person[] persons)");
+		
+	}
+	
 	public int getRowCount() {
-		return nodeNumberOnPage;
+		return personsOnPage;
+	}
+
+	public void setRowCount(int personsOP) {
+		personsOnPage = personsOP;
 	}
 
 	public int getColumnCount() {
@@ -42,44 +55,10 @@ public class PersonsTableModel extends AbstractTableModel {
 		return cellsIsEditable;
 	}
 
-	public int getNodeNumberOnPage() {
-		return nodeNumberOnPage;
-	}
-
-	public void setNodeNumberOnPage(int nodeNOP) {
-		nodeNumberOnPage = nodeNOP;
-	}
-
-	public void makeCellsEditable(boolean b) {
-		cellsIsEditable = b;
-	}
-	
-	public void addPerson(Person p) {
-	//if(p == null) System.out.println("person is null in addPerson");
-		persons.add(p);
-		this.fireTableDataChanged();
-	}
-	
-	public Person getPerson(int ind) {
-		return persons.get(ind);
-	}
-	
-	/*public Class<?> getColumnClass(int columnIndex) {
-		switch(columnIndex) {
-		case 0: return String.class;
-		case 1: return String.class;
-		case 2: return long.class;
-		case 3: return long.class;
-		}
-		return null;
-	}*/
-
-
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-	//System.out.println("row:" + rowIndex + ", size:" + persons.size());
+//System.out.println("row:" + rowIndex + ", size:" + persons.size());
 		if(rowIndex >= persons.size()) return;
-	//System.out.println("set in " + rowIndex + "." + columnIndex);
-		Person p = null;
+//System.out.println("set in " + rowIndex + "." + columnIndex);
 		switch(columnIndex) {
 		case 0: {
 			persons.get(rowIndex).setFIO((String)aValue);
@@ -110,5 +89,93 @@ public class PersonsTableModel extends AbstractTableModel {
 		}
 		}
 	}
+
+	public void makeCellsEditable(boolean b) {
+		cellsIsEditable = b;
+	}
+
+	public void addPerson(Person p) {
+	//if(p == null) System.out.println("person is null in addPerson");
+		if((p != null) && (!this.persons.contains(p)))
+			persons.add(p);
+		fireTableDataChanged();
+	}
+	
+	public void addPerson(Person[] persons) {
+	//if(p == null) System.out.println("person is null in addPerson");
+		for(Person p:persons) {
+			addPerson(p);
+		}
+		fireTableDataChanged();
+	}
+	
+	public Person getPerson(int ind) {
+		return persons.get(ind);
+	}
+	
+	public int getPersonsSize() {
+		return persons.size();
+	}
+
+	public Person[] search(Person personQ) {
+		
+System.out.println("size of persons: " + persons.size());
+	/**
+	 * TODO:
+	 * repair search
+	 */
+		ArrayList<Person> personAList = new ArrayList<Person>();
+		
+		for(Person base : persons) {
+			if((!personQ.getAddress().equals("")) && 
+					(!base.getAddress().equals(personQ.getAddress()))) {
+System.out.println("break in address");
+				continue;
+			}
+			if((!personQ.getFIO().equals("")) && 
+					(!base.getFIO().equals(personQ.getFIO()))) {
+System.out.println("break in FIO");
+				continue;
+			}
+			if((personQ.getMobilePhoneNumber() != 0) && 
+					(base.getMobilePhoneNumber() != personQ.getMobilePhoneNumber())) {
+System.out.println("break in mobilePHN");
+				continue;
+			}
+			if((personQ.getHomePhoneNumber() != 0) && 
+					(base.getHomePhoneNumber() != personQ.getHomePhoneNumber())) {
+System.out.println("break in homePHN");
+				continue;
+			}
+System.out.println("adding " + base.toString());
+			personAList.add( new Person(base));
+		}
+	
+		Person[] personA = new Person[personAList.size()];
+		int pAIterator = 0;
+		for(Person p : personAList) {
+			personA[pAIterator++] = p;
+		}
+		
+System.out.println("length of personA: " + personA.length);
+	for(Person p:personA) System.out.println(p.toString());
+	
+		return personA;
+	}
+	
+	public void cleanAll() {
+		persons = new ArrayList<Person>();
+		fireTableDataChanged();
+	}
+	
+	/*public Class<?> getColumnClass(int columnIndex) {
+		switch(columnIndex) {
+		case 0: return String.class;
+		case 1: return String.class;
+		case 2: return long.class;
+		case 3: return long.class;
+		}
+		return null;
+	}*/
 
 }

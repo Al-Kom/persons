@@ -2,15 +2,9 @@ package persons_gui;
 
 import java.awt.FlowLayout;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.*;
 
-import persons_buttons_listeners.AddNodeButtonListener;
+import persons_buttons_listeners.*;
 import persons_model.PersonsTableModel;
 
 public class PersonsGUI {
@@ -23,6 +17,7 @@ public class PersonsGUI {
 		frame.setLayout( new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
 		
 		tableModel = new PersonsTableModel();
+		tableModel.makeCellsEditable(false);
 		JTable table = new JTable(tableModel);
 		JScrollPane scroller = new JScrollPane(table);
 		scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
@@ -44,7 +39,10 @@ public class PersonsGUI {
 			JButton searchButton = new JButton("search");
 			JButton saveButton = new JButton("save");
 			JButton loadButton = new JButton("load");
-			addButton.addActionListener( new AddNodeButtonListener(frame,tableModel));
+			addButton.addActionListener( new AddButtonListener(frame,tableModel));
+			searchButton.addActionListener( new SearchButtonListener(frame, tableModel));
+			saveButton.addActionListener( new SaveButtonListener(frame, tableModel));
+			loadButton.addActionListener( new LoadButtonListener(frame, tableModel));
 			funButtonsPanel.add(addButton);
 			funButtonsPanel.add(removeButton);
 			funButtonsPanel.add(searchButton);
