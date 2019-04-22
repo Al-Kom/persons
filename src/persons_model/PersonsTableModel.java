@@ -19,8 +19,8 @@ public class PersonsTableModel extends AbstractTableModel {
 		if(persons.length != 0) {
 			this.addPerson(persons);
 		} else
-System.out.println("persons[] is null in PersonsTableModel(Person[] persons)");
-		
+			System.out.println("persons[] is null in "
+					+ "PersonsTableModel(Person[] persons)");
 	}
 	
 	public int getRowCount() {
@@ -96,7 +96,7 @@ System.out.println("persons[] is null in PersonsTableModel(Person[] persons)");
 
 	public void addPerson(Person p) {
 	//if(p == null) System.out.println("person is null in addPerson");
-		if((p != null) && (!this.persons.contains(p)))
+		if((p != null) && (!this.persons.contains(p)) && (this.search(p).length == 0))
 			persons.add(p);
 		fireTableDataChanged();
 	}
@@ -118,36 +118,30 @@ System.out.println("persons[] is null in PersonsTableModel(Person[] persons)");
 	}
 
 	public Person[] search(Person personQ) {
-		
-System.out.println("size of persons: " + persons.size());
-	/**
-	 * TODO:
-	 * repair search
-	 */
 		ArrayList<Person> personAList = new ArrayList<Person>();
 		
 		for(Person base : persons) {
 			if((!personQ.getAddress().equals("")) && 
 					(!base.getAddress().equals(personQ.getAddress()))) {
-System.out.println("break in address");
+//System.out.println("break in address");
 				continue;
 			}
 			if((!personQ.getFIO().equals("")) && 
 					(!base.getFIO().equals(personQ.getFIO()))) {
-System.out.println("break in FIO");
+//System.out.println("break in FIO");
 				continue;
 			}
 			if((personQ.getMobilePhoneNumber() != 0) && 
 					(base.getMobilePhoneNumber() != personQ.getMobilePhoneNumber())) {
-System.out.println("break in mobilePHN");
+//System.out.println("break in mobilePHN");
 				continue;
 			}
 			if((personQ.getHomePhoneNumber() != 0) && 
 					(base.getHomePhoneNumber() != personQ.getHomePhoneNumber())) {
-System.out.println("break in homePHN");
+//System.out.println("break in homePHN");
 				continue;
 			}
-System.out.println("adding " + base.toString());
+//System.out.println("adding " + base.toString());
 			personAList.add( new Person(base));
 		}
 	
@@ -157,7 +151,7 @@ System.out.println("adding " + base.toString());
 			personA[pAIterator++] = p;
 		}
 		
-System.out.println("length of personA: " + personA.length);
+//System.out.println("length of personA: " + personA.length);
 	for(Person p:personA) System.out.println(p.toString());
 	
 		return personA;

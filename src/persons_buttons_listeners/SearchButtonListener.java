@@ -65,6 +65,7 @@ public class SearchButtonListener implements ActionListener {
 	
 	private class DialogActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			dialogAnswerTableModel.cleanAll();
 			switch(searchList.getSelectedIndex()) {
 			case 0: {
 				//search person by his mobile phone and his first word in FIO
@@ -74,10 +75,9 @@ public class SearchButtonListener implements ActionListener {
 				personQ.setFIO(
 						dialogQuestionTableModel.getPerson(0).getFIO());
 System.out.println("we'll search " + personQ.toString() + " (Q1)");
-				dialogAnswerTableModel = new PersonsTableModel(
-						tableModel.search(personQ));
+				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
 				break;
-			}
+			}//case 0
 			case 1: {
 				//search person by his home phone and his address
 				Person personQ = new Person();
@@ -86,10 +86,9 @@ System.out.println("we'll search " + personQ.toString() + " (Q1)");
 				personQ.setAddress(
 						dialogQuestionTableModel.getPerson(0).getAddress());
 System.out.println("we'll search " + personQ.toString() + " (Q2)");
-				dialogAnswerTableModel = new PersonsTableModel(
-						tableModel.search(personQ));
+				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
 				break;
-			}
+			}//case 1
 			case 2: {
 				//search person by his first word in FIO and by any of his phone
 				Person personQ = new Person();
@@ -98,33 +97,19 @@ System.out.println("we'll search " + personQ.toString() + " (Q2)");
 				personQ.setFIO(
 						dialogQuestionTableModel.getPerson(0).getFIO());
 System.out.println("we'll search " + personQ.toString() + " (Q3.1)");
-				dialogAnswerTableModel = new PersonsTableModel(
-						tableModel.search(personQ));
-				personQ.setHomePhoneNumber(-1);
+				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
+				personQ.setHomePhoneNumber(0);
 				personQ.setMobilePhoneNumber(
 						dialogQuestionTableModel.getPerson(0).getMobilePhoneNumber());
 System.out.println("and " + personQ.toString() + " (Q3.2)");
 				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
 				break;
-			}
-				
-			}
+			}//case 2
+			}//switch(searchList.getSelectedIndex())
 			
 			dialogAnswerTableModel.setRowCount(dialogAnswerTableModel.getPersonsSize());
-			dialogAnswerTableModel.fireTableStructureChanged();
-System.out.println("dialogAnswerTableRowCount size: " + dialogAnswerTableModel.getRowCount());
-			
 			dialogAnswerTableModel.fireTableDataChanged();
-			dialogAnswerTableModel.fireTableCellUpdated(0, 0);
-			dialogAnswerTableModel.fireTableRowsInserted(0, dialogAnswerTableModel.getRowCount());
-			dialogAnswerTableModel.fireTableRowsUpdated(0, dialogAnswerTableModel.getRowCount());
-			dialogAnswerTableModel.fireTableStructureChanged();
-			/**
-			 * TODO:
-			 * how to update dialogAnswerTableModel?
-			 */
 			dialogAnswerTableModel.makeCellsEditable(false);
-
 		}
 		
 	}
