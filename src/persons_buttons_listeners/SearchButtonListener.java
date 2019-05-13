@@ -1,4 +1,13 @@
 package persons_buttons_listeners;
+/**
+ * TODO:
+ * normalize data (make another GUI without table, see registration forms):
+ * 		-name
+ * 		-Surname
+ * 		-father's name
+ * 		-mobile phone number
+ * 		-home phone number
+ */
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -6,6 +15,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import persons_gui.PersonInputPanel;
 import persons_model.Person;
 import persons_model.PersonsTableModel;
 
@@ -13,7 +23,7 @@ public class SearchButtonListener implements ActionListener {
 	private JFrame frame;
 	private PersonsTableModel tableModel;
 	private JDialog dialog;
-	private PersonsTableModel dialogQuestionTableModel;
+	private PersonInputPanel inputPanel;
 	private JComboBox<String> searchList;
 	private PersonsTableModel dialogAnswerTableModel;
 
@@ -30,22 +40,16 @@ public class SearchButtonListener implements ActionListener {
 		dialog = new JDialog(frame, "Поиск записи", 
 				JDialog.DEFAULT_MODALITY_TYPE);
 		dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
-		
-		dialogQuestionTableModel = new PersonsTableModel();
-			dialogQuestionTableModel.setRowCount(1);
-			dialogQuestionTableModel.addPerson( new Person());
-		JTable dialogQuestionTable = new JTable(dialogQuestionTableModel);
-		JScrollPane scrollerQ = new JScrollPane(dialogQuestionTable);
-		scrollerQ.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-		scrollerQ.setToolTipText("Запрос");
-		scrollerQ.setPreferredSize( new Dimension(700, 50));
+
+		inputPanel = new PersonInputPanel();
+
 		String[] searchL = {"-по номеру моб. телефона и фамилии",
 				"-по номеру дом. телефона и адресу",
 				"-по фамилии и цифрам в одном из номеров"};
 		searchList = new JComboBox<String>(searchL);
 		
-		JButton addButton = new JButton("Поиск");
-			addButton.addActionListener(new DialogActionListener());
+		JButton searchButton = new JButton("Поиск");
+			searchButton.addActionListener(new DialogActionListener());
 
 		dialogAnswerTableModel = new PersonsTableModel();
 			dialogAnswerTableModel.makeCellsEditable(false);
@@ -55,9 +59,10 @@ public class SearchButtonListener implements ActionListener {
 		scrollerA.setToolTipText("Ответ");
 		scrollerA.setPreferredSize( new Dimension(700, 110));
 		
-		dialog.add(scrollerQ);
+		dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
+		dialog.add(inputPanel);		
 		dialog.add(searchList);
-		dialog.add(addButton);
+		dialog.add(searchButton);
 		dialog.add(scrollerA);
 		dialog.setSize(700, 200);
 		dialog.setVisible(true);
@@ -65,51 +70,50 @@ public class SearchButtonListener implements ActionListener {
 	
 	private class DialogActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
+			
 			dialogAnswerTableModel.cleanAll();
+			
 			switch(searchList.getSelectedIndex()) {
 			case 0: {
-				//search person by his mobile phone and his first word in FIO
+			//search person by his mobile phone and his second name
 				Person personQ = new Person();
-				personQ.setMobilePhoneNumber(
-						dialogQuestionTableModel.getPerson(0).getMobilePhoneNumber());
-				personQ.setFIO(
-						dialogQuestionTableModel.getPerson(0).getFIO());
-System.out.println("we'll search " + personQ.toString() + " (Q1)");
+				personQ.setMobilePhoneNumber(inputPanel.getMobilePHN());
+				personQ.setSecondName(inputPanel.getSecondName());
+//System.out.println("we'll search " + personQ.toString() + " (Q1)");
+
 				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
 				break;
 			}//case 0
 			case 1: {
-				//search person by his home phone and his address
+			//search person by his home phone and his address
 				Person personQ = new Person();
-				personQ.setHomePhoneNumber(
-						dialogQuestionTableModel.getPerson(0).getHomePhoneNumber());
-				personQ.setAddress(
-						dialogQuestionTableModel.getPerson(0).getAddress());
-System.out.println("we'll search " + personQ.toString() + " (Q2)");
+				personQ.setHomePhoneNumber(inputPanel.getHomePHN());
+				personQ.setCity(inputPanel.getCity());
+				personQ.setStreet(inputPanel.getStreet());
+				personQ.setHouseNumber(inputPanel.getHouseN());
+//System.out.println("we'll search " + personQ.toString() + " (Q2)");
+
 				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
 				break;
 			}//case 1
 			case 2: {
-				//search person by his first word in FIO and by any of his phone
+			//search person by his second name and by any of his phone
 				Person personQ = new Person();
-				personQ.setHomePhoneNumber(
-						dialogQuestionTableModel.getPerson(0).getHomePhoneNumber());
-				personQ.setFIO(
-						dialogQuestionTableModel.getPerson(0).getFIO());
-System.out.println("we'll search " + personQ.toString() + " (Q3.1)");
+				personQ.setHomePhoneNumber(inputPanel.getHomePHN());
+				personQ.setSecondName(inputPanel.getSecondName());
+//System.out.println("we'll search " + personQ.toString() + " (Q3.1)");
+
 				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
 				personQ.setHomePhoneNumber(0);
-				personQ.setMobilePhoneNumber(
-						dialogQuestionTableModel.getPerson(0).getMobilePhoneNumber());
-System.out.println("and " + personQ.toString() + " (Q3.2)");
+				personQ.setMobilePhoneNumber(inputPanel.getMobilePHN());
+//System.out.println("and " + personQ.toString() + " (Q3.2)");
+
 				dialogAnswerTableModel.addPerson(tableModel.search(personQ));
 				break;
 			}//case 2
 			}//switch(searchList.getSelectedIndex())
 			
-			dialogAnswerTableModel.setRowCount(dialogAnswerTableModel.getPersonsSize());
 			dialogAnswerTableModel.fireTableDataChanged();
-			dialogAnswerTableModel.makeCellsEditable(false);
 		}
 		
 	}

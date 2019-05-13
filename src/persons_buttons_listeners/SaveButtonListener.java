@@ -23,16 +23,7 @@ public class SaveButtonListener implements ActionListener {
 	}
 	
 	private void saveToFile(File file) {
-		try {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(file + ".txt"));
-			for(int i = 0 ; i < tableModel.getPersonsSize(); i++) {
-				writer.write(tableModel.getPerson(i).toString() + "\n");
-			}
-			
-			writer.close();
-		} catch (IOException ex) {
-	System.out.println("can't save to file: " + file.getPath());
-			ex.printStackTrace();
-		}
+		PersonsSaver saver = new PersonsSaver();
+		saver.saveTableToFile(tableModel, file);
 	}
 }

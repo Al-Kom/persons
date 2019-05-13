@@ -7,6 +7,7 @@ import javax.swing.table.AbstractTableModel;
 public class PersonsTableModel extends AbstractTableModel {
 	private final String[] columnNames = {"ФИО", "Адрес", "Моб. тел.", "Дом. тел."};
 	private ArrayList<Person> persons;
+	private int pageNumber = 0;
 	private int personsOnPage = 5;
 	private boolean cellsIsEditable = true;
 	
@@ -18,9 +19,7 @@ public class PersonsTableModel extends AbstractTableModel {
 		this.persons = new ArrayList<Person>();
 		if(persons.length != 0) {
 			this.addPerson(persons);
-		} else
-			System.out.println("persons[] is null in "
-					+ "PersonsTableModel(Person[] persons)");
+		}
 	}
 	
 	public int getRowCount() {
@@ -36,12 +35,13 @@ public class PersonsTableModel extends AbstractTableModel {
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if(rowIndex < persons.size()) {
+		int rowI = rowIndex + pageNumber*personsOnPage;
+		if(rowI < persons.size()) {
 			switch(columnIndex) {
-			case 0: return persons.get(rowIndex).getFIO();
-			case 1: return persons.get(rowIndex).getAddress();
-			case 2: return persons.get(rowIndex).getMobilePhoneNumber();
-			case 3: return persons.get(rowIndex).getHomePhoneNumber();
+			case 0: return persons.get(rowI).getFIO();
+			case 1: return persons.get(rowI).getAddress();
+			case 2: return persons.get(rowI).getMobilePhoneNumber();
+			case 3: return persons.get(rowI).getHomePhoneNumber();
 			}
 		}
 		return null;
@@ -55,40 +55,40 @@ public class PersonsTableModel extends AbstractTableModel {
 		return cellsIsEditable;
 	}
 
-	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-//System.out.println("row:" + rowIndex + ", size:" + persons.size());
-		if(rowIndex >= persons.size()) return;
-//System.out.println("set in " + rowIndex + "." + columnIndex);
-		switch(columnIndex) {
-		case 0: {
-			persons.get(rowIndex).setFIO((String)aValue);
-			break;
-		}
-		case 1: {
-			persons.get(rowIndex).setAddress((String)aValue);
-			break;
-		}
-		case 2: {
-			long mobilePHN = -1;
-			try {
-				mobilePHN = Long.parseLong((String)aValue);
-			} catch(Exception ex) {ex.printStackTrace();}
-			if(mobilePHN > 0) {
-				persons.get(rowIndex).setMobilePhoneNumber(mobilePHN);			
-			}
-			break;
-		}
-		case 3: {
-			long homePHN = -1;
-			try {
-				homePHN = Long.parseLong((String)aValue);
-			} catch(Exception ex) {ex.printStackTrace();}
-			if(homePHN > 0) {
-				persons.get(rowIndex).setHomePhoneNumber(homePHN);	
-			}
-		}
-		}
-	}
+//	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+////System.out.println("row:" + rowIndex + ", size:" + persons.size());
+//		if(rowIndex >= persons.size()) return;
+////System.out.println("set in " + rowIndex + "." + columnIndex);
+//		switch(columnIndex) {
+//		case 0: {
+//			persons.get(rowIndex).setFirstName((String)aValue);
+//			break;
+//		}
+//		case 1: {
+//			persons.get(rowIndex).setAddress((String)aValue);
+//			break;
+//		}
+//		case 2: {
+//			long mobilePHN = -1;
+//			try {
+//				mobilePHN = Long.parseLong((String)aValue);
+//			} catch(NumberFormatException ex) {ex.printStackTrace();}
+//			if(mobilePHN > 0) {
+//				persons.get(rowIndex).setMobilePhoneNumber(mobilePHN);			
+//			}
+//			break;
+//		}
+//		case 3: {
+//			long homePHN = -1;
+//			try {
+//				homePHN = Long.parseLong((String)aValue);
+//			} catch(NumberFormatException ex) {ex.printStackTrace();}
+//			if(homePHN > 0) {
+//				persons.get(rowIndex).setHomePhoneNumber(homePHN);	
+//			}
+//		}
+//		}
+//	}
 
 	public void makeCellsEditable(boolean b) {
 		cellsIsEditable = b;
@@ -117,18 +117,54 @@ public class PersonsTableModel extends AbstractTableModel {
 		return persons.size();
 	}
 
+	public int getPageNumber() {
+		return pageNumber;
+	}
+
+	public void setPageNumber(int pageNumber) {
+		int pagesAmount = persons.size()/personsOnPage;
+		pageNumber = Math.abs(pageNumber);
+		if(pageNumber < pagesAmount)
+			this.pageNumber = pageNumber;
+		else
+			this.pageNumber = pagesAmount;
+		fireTableDataChanged();
+	}
+
 	public Person[] search(Person personQ) {
 		ArrayList<Person> personAList = new ArrayList<Person>();
 		
 		for(Person base : persons) {
-			if((!personQ.getAddress().equals("")) && 
-					(!base.getAddress().equals(personQ.getAddress()))) {
+			if(base.getFirstName().equals(base.getSecondName()))
+				System.out.println("ERR: " + base.toString());
+			if((!personQ.getFirstName().equals("")) && 
+					(!base.getFirstName().equals(personQ.getFirstName()))) {
+//System.out.println("break in FirstName");
+				continue;
+			}
+			if((!personQ.getSecondName().equals("")) && 
+					(!base.getSecondName().equals(personQ.getSecondName()))) {
+//System.out.println("break in SecondName");
+				continue;
+			}
+			if((!personQ.getThirdName().equals("")) && 
+					(!base.getThirdName().equals(personQ.getThirdName()))) {
+//System.out.println("break in ThirdName");
+				continue;
+			}
+			if((!personQ.getCity().equals("")) && 
+					(!base.getCity().equals(personQ.getCity()))) {
 //System.out.println("break in address");
 				continue;
 			}
-			if((!personQ.getFIO().equals("")) && 
-					(!base.getFIO().equals(personQ.getFIO()))) {
-//System.out.println("break in FIO");
+			if((!personQ.getStreet().equals("")) && 
+					(!base.getStreet().equals(personQ.getStreet()))) {
+//System.out.println("break in address");
+				continue;
+			}
+			if((personQ.getHouseNumber() != 0) && 
+					(base.getHouseNumber() != personQ.getHouseNumber())) {
+//System.out.println("break in mobilePHN");
 				continue;
 			}
 			if((personQ.getMobilePhoneNumber() != 0) && 
@@ -160,6 +196,22 @@ public class PersonsTableModel extends AbstractTableModel {
 	public void cleanAll() {
 		persons = new ArrayList<Person>();
 		fireTableDataChanged();
+	}
+	
+	public String getStatus() {
+		
+		int pagesAmount = persons.size()/personsOnPage;
+		String res = "Страница " + pageNumber +
+				" из " + pagesAmount;
+		int perOnPage;
+		if(pageNumber == pagesAmount || pagesAmount == 0)
+			perOnPage = persons.size()%personsOnPage;
+		else
+			perOnPage = personsOnPage;
+		res += ". Выводится " + perOnPage + " записей на странице из "
+				+ persons.size() + " существующих";
+		
+		return res;
 	}
 	
 	/*public Class<?> getColumnClass(int columnIndex) {
