@@ -10,21 +10,21 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 import persons_model.Person;
 import persons_model.PersonsTableModel;
 
 public class PersonsSearchAndRemoveDialog {
 	private PersonsTableModel tableModel;
-	private JTextField infoTextField;
+	private JLabel infoTextField;
 	private PersonInputPanel inputPanel;
 	private JComboBox<String> searchList;
 	private PersonsTableModel dialogAnswerTableModel;
 	private boolean toRemoved = false;
 	
 	public PersonsSearchAndRemoveDialog(PersonsTableModel tableModel,
-			JTextField infoTextField, boolean toRemoved) {
+			JLabel infoTextField, boolean toRemoved) {
 		
 		this.tableModel = tableModel;
 		this.infoTextField = infoTextField;
@@ -66,7 +66,7 @@ public class PersonsSearchAndRemoveDialog {
 		dialog.add(searchButton);
 		dialog.add(scrollerA);
 		dialog.add(pageButonsPanel.getPanel());
-		dialog.setSize(700, 250);
+		dialog.setSize(750, 300);
 		dialog.setVisible(true);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
@@ -128,9 +128,11 @@ public class PersonsSearchAndRemoveDialog {
 			//deleting founded persons
 			if(toRemoved)
 				for(int i = 0; i < dialogAnswerTableModel.getPersonsSize(); i++) {
-				dialogAnswerTableModel.removePerson(
+					tableModel.removePerson(
 						dialogAnswerTableModel.getPerson(i));
 				}
+			//update page if out of borders
+			tableModel.setPageNumber(0);
 			//update information field
 			if(infoTextField != null)
 				infoTextField.setText(tableModel.getStatus());

@@ -4,7 +4,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 import persons_buttons_listeners.AddButtonListener;
 import persons_buttons_listeners.LoadButtonListener;
@@ -17,7 +17,7 @@ public class PersonsFunctionalButtonsPanel {
 	private JPanel funPanel;
 
 	public PersonsFunctionalButtonsPanel(PersonsTableModel tableModel,
-			JTextField infoTextField) {
+			JLabel infoTextField) {
 		funPanel = new JPanel();
 			JButton addButton = new JButton("add");
 			JButton removeButton = new JButton("remove");

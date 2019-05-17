@@ -5,7 +5,10 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 public class PersonsTableModel extends AbstractTableModel {
-	private final String[] columnNames = {"ФИО", "Адрес", "Моб. тел.", "Дом. тел."};
+	private final String[] columnNames = {"ФИО", 
+			"Адрес",
+			"Моб. тел.", 
+			"Дом. тел."};
 	private ArrayList<Person> persons;
 	private int pageNumber = 0;
 	private int personsOnPage = 5;
@@ -75,8 +78,7 @@ public class PersonsTableModel extends AbstractTableModel {
 	
 	public void removePerson(Person p) {	
 		if(p != null) {
-			if(persons.remove(p))
-				System.out.print(p.getFIO() + " removed");
+			persons.remove(p);
 		}		
 		fireTableDataChanged();
 	}
@@ -94,7 +96,7 @@ public class PersonsTableModel extends AbstractTableModel {
 	}
 
 	public void setPageNumber(int pageNumber) {
-		int pagesAmount = persons.size()/personsOnPage;
+		int pagesAmount = getPagesAmount();
 		if(pageNumber < 0)
 			return;
 		else if(pageNumber < pagesAmount)
@@ -159,18 +161,23 @@ public class PersonsTableModel extends AbstractTableModel {
 	
 	public String getStatus() {
 		
-		int pagesAmount = persons.size()/personsOnPage;
-		String res = "Страница " + pageNumber +
-				" из " + pagesAmount;
+		int pagesAmount = getPagesAmount();
+		String res = "<html><h3>Страница " + (pageNumber+1) +
+				" из " + (pagesAmount+1);
 		int perOnPage;
 		if(pageNumber == pagesAmount || pagesAmount == 0)
 			perOnPage = persons.size()%personsOnPage;
 		else
 			perOnPage = personsOnPage;
-		res += ". Выводится " + perOnPage + " записей на странице из "
-				+ persons.size() + " существующих";
+		res += "<br> Выводится " + perOnPage + " записей на странице из "
+				+ personsOnPage + "<br> Всего " + persons.size()
+				+ " записей</h3></html>";
 		
 		return res;
+	}
+	
+	private int getPagesAmount() {
+		return (persons.size()/personsOnPage);
 	}
 
 }

@@ -3,12 +3,13 @@ package persons_gui;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import persons_buttons_listeners.ChangePageListener;
-import persons_buttons_listeners.ChangePersonNumberOnPageListener;
+import persons_buttons_listeners.ChangePersonsAmountOnPageListener;
 import persons_buttons_listeners.FirstPageListener;
 import persons_buttons_listeners.LastPageListener;
 import persons_buttons_listeners.NextPageListener;
@@ -19,20 +20,24 @@ public class PersonsTablePageButtonsPanel {
 	private JPanel pagePanel;
 	
 	public PersonsTablePageButtonsPanel(PersonsTableModel tableModel,
-			JTextField infoTextField) {
+			JLabel infoTextField) {
 		
 		pagePanel= new JPanel();
 		JPanel quickChangePagePanel = new JPanel();
-			JButton firstPageButton = new JButton("<start icon>");
+			JButton firstPageButton = new JButton(
+					new ImageIcon("sources/first.png"));
 			firstPageButton.addActionListener(
 					new FirstPageListener(tableModel, infoTextField));
-			JButton previosPageButton = new JButton("<prev icon>");
+			JButton previosPageButton = new JButton(
+					new ImageIcon("sources/prev.png"));
 			previosPageButton.addActionListener(
 					new PrevPageListener(tableModel, infoTextField));
-			JButton nextPageButton = new JButton("<next icon>");
+			JButton nextPageButton = new JButton(
+					new ImageIcon("sources/next.png"));
 			nextPageButton.addActionListener(
 					new NextPageListener(tableModel, infoTextField));
-			JButton lastPageButton = new JButton("<last icon>");
+			JButton lastPageButton = new JButton(
+					new ImageIcon("sources/last.png"));
 			lastPageButton.addActionListener(
 					new LastPageListener(tableModel, infoTextField));
 		JPanel changeSeveralPagePanel = new JPanel();
@@ -42,7 +47,7 @@ public class PersonsTablePageButtonsPanel {
 			JButton changePersonNumberOnPageButton =
 					new JButton("Изменить количество записей на странице");
 			changePersonNumberOnPageButton.addActionListener( 
-					new ChangePersonNumberOnPageListener(tableModel, 
+					new ChangePersonsAmountOnPageListener(tableModel, 
 													infoTextField));
 			
 		pagePanel.setLayout( new BoxLayout(pagePanel, BoxLayout.Y_AXIS));

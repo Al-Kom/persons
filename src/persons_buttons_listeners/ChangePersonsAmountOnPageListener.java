@@ -4,16 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 import persons_model.PersonsTableModel;
 
-public class ChangePersonNumberOnPageListener implements ActionListener {
+public class ChangePersonsAmountOnPageListener implements ActionListener {
 	private PersonsTableModel tableModel;
-	private JTextField infoTextField;
+	private JLabel infoTextField;
 	
-	public ChangePersonNumberOnPageListener(PersonsTableModel tableModel,
-			JTextField infoTextField) {
+	public ChangePersonsAmountOnPageListener(PersonsTableModel tableModel,
+			JLabel infoTextField) {
 		this.tableModel = tableModel;
 		this.infoTextField = infoTextField;
 	}
@@ -30,6 +30,8 @@ public class ChangePersonNumberOnPageListener implements ActionListener {
 			tableModel.setRowCount(number);
 			//updating table
 			tableModel.fireTableDataChanged();
+			//update page if out of borders
+			tableModel.setPageNumber(0);
 			//update information field
 			if(infoTextField != null)
 				infoTextField.setText(tableModel.getStatus());

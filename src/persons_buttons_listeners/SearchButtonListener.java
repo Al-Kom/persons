@@ -15,8 +15,7 @@ public class SearchButtonListener implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		//open dialog for searching
-		PersonsSearchAndRemoveDialog dialog = 
-				new PersonsSearchAndRemoveDialog(tableModel,null,false);
+		new PersonsSearchAndRemoveDialog(tableModel,null,false);
 	}
 
 }

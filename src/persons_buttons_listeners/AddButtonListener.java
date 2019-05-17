@@ -6,16 +6,15 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 
 import persons_gui.PersonInputPanel;
-import persons_model.Person;
 import persons_model.PersonsTableModel;
 
 public class AddButtonListener implements ActionListener {
-	private JTextField infoTextField;
+	private JLabel infoTextField;
 	private PersonsTableModel tableModel;
 	private PersonInputPanel inputPanel;
 	
 	public AddButtonListener(PersonsTableModel tableModel,
-			JTextField infoTextField) {
+			JLabel infoTextField) {
 		this.tableModel = tableModel;
 		this.infoTextField = infoTextField;
 	}
@@ -40,7 +39,7 @@ public class AddButtonListener implements ActionListener {
 		
 		dialog.setSize(700, 100);
 		dialog.setVisible(true);
-		dialog.setDefaultCloseOperation(JDialog.EXIT_ON_CLOSE);
+		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}
 	
 	private class DialogActionListener implements ActionListener {

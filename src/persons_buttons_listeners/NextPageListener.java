@@ -3,16 +3,16 @@ package persons_buttons_listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 import persons_model.PersonsTableModel;
 
 public class NextPageListener implements ActionListener {
 	private PersonsTableModel tableModel;
-	private JTextField infoTextField;
+	private JLabel infoTextField;
 	
 	public NextPageListener(PersonsTableModel tableModel,
-			JTextField infoTextField) {
+			JLabel infoTextField) {
 		this.tableModel = tableModel;
 		this.infoTextField = infoTextField;
 	}

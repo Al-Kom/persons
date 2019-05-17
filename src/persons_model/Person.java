@@ -19,6 +19,7 @@ public class Person {
 		setHouseNumber(0);
 		setMobilePhoneNumber(0);
 		setHomePhoneNumber(0);
+System.out.println("new person " + getFIO());
 	}
 	
 	public Person(Person p) {
@@ -41,6 +42,7 @@ public class Person {
 			setMobilePhoneNumber(0);
 			setHomePhoneNumber(0);
 		}
+System.out.println("new person " + getFIO());
 	}
 
 	public Person(String firstN, String secondN, String thirdN, String city,
@@ -53,6 +55,7 @@ public class Person {
 		setHouseNumber(houseN);
 		setMobilePhoneNumber(mobilePHN);
 		setHomePhoneNumber(homePHN);
+System.out.println("new person " + getFIO());
 	}
 
 		public Person(String firstN, String secondN, String thirdN, String city,
@@ -65,6 +68,7 @@ public class Person {
 			setHouseNumber(houseN);
 			setMobilePhoneNumber(mobilePHN);
 			setHomePhoneNumber(homePHN);
+System.out.println("new person " + getFIO());
 		}
 	
 	public String getFirstName() {

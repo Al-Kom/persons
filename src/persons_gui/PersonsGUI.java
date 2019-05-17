@@ -1,10 +1,11 @@
 package persons_gui;
 
+
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 
 import persons_model.PersonsTableModel;
 
@@ -19,9 +20,11 @@ public class PersonsGUI {
 		JTable table = new JTable(tableModel);
 		JScrollPane scroller = new JScrollPane(table);
 		
-		JTextField infoTextField = new JTextField();
-		infoTextField.setText(tableModel.getStatus());
-		
+		JLabel infoTextField = new JLabel();
+			infoTextField.setText(tableModel.getStatus());
+			infoTextField.setHorizontalTextPosition(JLabel.CENTER);
+			infoTextField.setAlignmentX(JLabel.CENTER_ALIGNMENT);
+			
 		PersonsFunctionalButtonsPanel funButtonsPanel =
 				new PersonsFunctionalButtonsPanel(tableModel,infoTextField);
 		
@@ -34,7 +37,7 @@ public class PersonsGUI {
 		frame.getContentPane().add(pageButonsPanel.getPanel());
 		frame.getContentPane().add(infoTextField);
 
-		frame.setSize(700, 250);
+		frame.setSize(750, 300);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
