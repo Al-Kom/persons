@@ -19,6 +19,8 @@ public class FirstPageListener implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		tableModel.setPageNumber(0);
-		infoTextField.setText(tableModel.getStatus());
+		//update information field
+		if(infoTextField != null)
+			infoTextField.setText(tableModel.getStatus());
 	}
 }

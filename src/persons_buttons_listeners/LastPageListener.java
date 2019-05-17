@@ -20,6 +20,8 @@ public class LastPageListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		int page = tableModel.getPersonsSize()/tableModel.getRowCount();
 		tableModel.setPageNumber(page);
-		infoTextField.setText(tableModel.getStatus());
+		//update information field
+		if(infoTextField != null)
+			infoTextField.setText(tableModel.getStatus());
 	}
 }

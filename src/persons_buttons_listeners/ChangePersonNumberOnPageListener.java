@@ -21,12 +21,18 @@ public class ChangePersonNumberOnPageListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			//open a dialog window for page
-			String sNumber = 
-					JOptionPane.showInputDialog("Число записей на странице...");
+			String sNumber = JOptionPane.showInputDialog(null,
+					"Поменять на:",
+					"Число записей на странице",
+					JOptionPane.QUESTION_MESSAGE);
 			int number = Integer.parseInt(sNumber);
+			//set number of persons on a page
 			tableModel.setRowCount(number);
-			infoTextField.setText(tableModel.getStatus());
+			//updating table
 			tableModel.fireTableDataChanged();
+			//update information field
+			if(infoTextField != null)
+				infoTextField.setText(tableModel.getStatus());
 		} catch (NumberFormatException ex) {
 			System.out.println("Bad number for line ID");
 		}

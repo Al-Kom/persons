@@ -28,6 +28,7 @@ public class Person {
 			thirdName = p.getThirdName();
 			city = p.getCity();
 			street = p.getStreet();
+			houseNumber = p.getHouseNumber();
 			mobilePhoneNumber = p.getMobilePhoneNumber();
 			homePhoneNumber = p.getHomePhoneNumber();
 		} else {
@@ -36,13 +37,14 @@ public class Person {
 			setThirdName("");
 			setStreet("");
 			setCity("");
+			setHouseNumber(0);
 			setMobilePhoneNumber(0);
 			setHomePhoneNumber(0);
 		}
 	}
 
-	public Person(String firstN, String secondN, String thirdN, String city, String street, 
-			int houseN, long mobilePHN, long homePHN) {
+	public Person(String firstN, String secondN, String thirdN, String city,
+			String street, int houseN, long mobilePHN, long homePHN) {
 		setFirstName(firstN);
 		setSecondName(secondN);
 		setThirdName(thirdN);
@@ -52,6 +54,18 @@ public class Person {
 		setMobilePhoneNumber(mobilePHN);
 		setHomePhoneNumber(homePHN);
 	}
+
+		public Person(String firstN, String secondN, String thirdN, String city,
+				String street, String houseN, String mobilePHN, String homePHN) {
+			setFirstName(firstN);
+			setSecondName(secondN);
+			setThirdName(thirdN);
+			setCity(city);
+			setStreet(street);
+			setHouseNumber(houseN);
+			setMobilePhoneNumber(mobilePHN);
+			setHomePhoneNumber(homePHN);
+		}
 	
 	public String getFirstName() {
 		return firstName;
@@ -84,13 +98,13 @@ public class Person {
 	public void setCity(String city) {
 		this.city = city;
 	}
-
-	public void setStreet(String street) {
-		this.street = street;
-	}
 	
 	public String getStreet() {
 		return street;
+	}
+
+	public void setStreet(String street) {
+		this.street = street;
 	}
 
 	public int getHouseNumber() {
@@ -108,6 +122,10 @@ public class Person {
 			setHouseNumber(houseN);
 		} catch(NumberFormatException ex) {}
 	}
+	
+	public long getMobilePhoneNumber() {
+		return mobilePhoneNumber;
+	}
 
 	public void setMobilePhoneNumber(long mobilePHN) {
 		mobilePhoneNumber = mobilePHN;
@@ -121,8 +139,8 @@ public class Person {
 		} catch(NumberFormatException ex) {}
 	}
 	
-	public long getMobilePhoneNumber() {
-		return mobilePhoneNumber;
+	public long getHomePhoneNumber() {
+		return homePhoneNumber;
 	}
 
 	public void setHomePhoneNumber(long homePHN) {
@@ -135,10 +153,6 @@ public class Person {
 			hphn = Long.parseLong(homePHN);
 			setHomePhoneNumber(hphn);
 		} catch(NumberFormatException ex) {}
-	}
-	
-	public long getHomePhoneNumber() {
-		return homePhoneNumber;
 	}
 	
 	public String toString() {

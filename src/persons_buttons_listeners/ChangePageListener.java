@@ -21,10 +21,15 @@ public class ChangePageListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			//open a dialog window for page
-			String sPage = JOptionPane.showInputDialog("Перейти на страницу");
+			String sPage = JOptionPane.showInputDialog(null,
+					"Номер:",
+					"Перейти на страницу",
+					JOptionPane.QUESTION_MESSAGE);
 			int page = Integer.parseInt(sPage);
 			tableModel.setPageNumber(page);
-			infoTextField.setText(tableModel.getStatus());
+			//update information field
+			if(infoTextField != null)
+				infoTextField.setText(tableModel.getStatus());
 		} catch (NumberFormatException ex) {
 			System.out.println("Bad number for line ID");
 		}

@@ -21,6 +21,8 @@ public class PrevPageListener implements ActionListener {
 		int page = tableModel.getPageNumber() - 1;
 		if(page >= 0)
 			tableModel.setPageNumber(page);
-		infoTextField.setText(tableModel.getStatus());
+		//update information field
+		if(infoTextField != null)
+			infoTextField.setText(tableModel.getStatus());
 	}
 }

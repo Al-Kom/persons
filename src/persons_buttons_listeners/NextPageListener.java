@@ -21,7 +21,9 @@ public class NextPageListener implements ActionListener {
 		int page = tableModel.getPageNumber() + 1;
 		if(page <= tableModel.getPersonsSize()/tableModel.getRowCount())
 			tableModel.setPageNumber(page);
-		infoTextField.setText(tableModel.getStatus());
+		//update information field
+		if(infoTextField != null)
+			infoTextField.setText(tableModel.getStatus());
 	}
 
 }

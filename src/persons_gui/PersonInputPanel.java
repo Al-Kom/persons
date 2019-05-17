@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import persons_model.Person;
+
 public class PersonInputPanel extends JPanel {
 
 	private JTextField firstNameField;
@@ -60,6 +62,19 @@ public class PersonInputPanel extends JPanel {
 			addressDataPanel.add(houseNField);
 			addressDataPanel.add(homePHNLabel);
 			addressDataPanel.add(homePHNField);
+	}
+	
+	public Person getPerson() {
+		Person person = new Person(
+				getFirstName(),
+				getSecondName(),
+				getThirdName(),
+				getCity(),			
+				getStreet(),
+				getHouseN(),
+				getMobilePHN(),
+				getHomePHN());
+		return person;
 	}
 	
 	public String getFirstName() {
