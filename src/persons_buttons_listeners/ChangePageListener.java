@@ -10,12 +10,12 @@ import persons_model.PersonsTableModel;
 
 public class ChangePageListener implements ActionListener {
 	private PersonsTableModel tableModel;
-	private JLabel infoTextField;
+	private JLabel statusLabel;
 	
 	public ChangePageListener(PersonsTableModel tableModel,
-			JLabel infoTextField) {
+			JLabel statusLabel) {
 		this.tableModel = tableModel;
-		this.infoTextField = infoTextField;
+		this.statusLabel = statusLabel;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -28,8 +28,8 @@ public class ChangePageListener implements ActionListener {
 			int page = Integer.parseInt(sPage);
 			tableModel.setPageNumber(page);
 			//update information field
-			if(infoTextField != null)
-				infoTextField.setText(tableModel.getStatus());
+			if(statusLabel != null)
+				statusLabel.setText(tableModel.getStatus());
 		} catch (NumberFormatException ex) {
 			System.out.println("Bad number for line ID");
 		}

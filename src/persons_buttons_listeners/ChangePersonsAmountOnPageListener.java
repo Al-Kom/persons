@@ -10,12 +10,12 @@ import persons_model.PersonsTableModel;
 
 public class ChangePersonsAmountOnPageListener implements ActionListener {
 	private PersonsTableModel tableModel;
-	private JLabel infoTextField;
+	private JLabel statusLabel;
 	
 	public ChangePersonsAmountOnPageListener(PersonsTableModel tableModel,
-			JLabel infoTextField) {
+			JLabel statusLabel) {
 		this.tableModel = tableModel;
-		this.infoTextField = infoTextField;
+		this.statusLabel = statusLabel;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -33,8 +33,8 @@ public class ChangePersonsAmountOnPageListener implements ActionListener {
 			//update page if out of borders
 			tableModel.setPageNumber(0);
 			//update information field
-			if(infoTextField != null)
-				infoTextField.setText(tableModel.getStatus());
+			if(statusLabel != null)
+				statusLabel.setText(tableModel.getStatus());
 		} catch (NumberFormatException ex) {
 			System.out.println("Bad number for line ID");
 		}

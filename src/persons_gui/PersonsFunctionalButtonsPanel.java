@@ -17,7 +17,7 @@ public class PersonsFunctionalButtonsPanel {
 	private JPanel funPanel;
 
 	public PersonsFunctionalButtonsPanel(PersonsTableModel tableModel,
-			JLabel infoTextField) {
+			JLabel statusLabel) {
 		funPanel = new JPanel();
 			JButton addButton = new JButton("add");
 			JButton removeButton = new JButton("remove");
@@ -25,15 +25,15 @@ public class PersonsFunctionalButtonsPanel {
 			JButton saveButton = new JButton("save");
 			JButton loadButton = new JButton("load");
 			addButton.addActionListener(
-					new AddButtonListener(tableModel, infoTextField));
+					new AddButtonListener(tableModel, statusLabel));
 			removeButton.addActionListener( 
-					new RemoveButtonListener(tableModel, infoTextField));
+					new RemoveButtonListener(tableModel, statusLabel));
 			searchButton.addActionListener(
 					new SearchButtonListener(tableModel));
 			saveButton.addActionListener(
 					new SaveButtonListener(tableModel));
 			loadButton.addActionListener(
-					new LoadButtonListener(tableModel, infoTextField));
+					new LoadButtonListener(tableModel, statusLabel));
 
 		funPanel.setLayout( new FlowLayout());
 		funPanel.add(addButton);

@@ -25,8 +25,6 @@ public class SaveButtonListener implements ActionListener {
 	}
 	
 	private void saveToFile(File file) {
-		//clean table before saving
-		tableModel.cleanAll();
 		PersonsSaver saver = new PersonsSaver();
 		//filling table all the persons from file
 		saver.saveTableToFile(tableModel, file);

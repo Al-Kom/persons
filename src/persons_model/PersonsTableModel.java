@@ -1,183 +1,57 @@
 package persons_model;
 
-import java.util.ArrayList;
-
 import javax.swing.table.AbstractTableModel;
+
+import controllers.PersonsMainController;
 
 public class PersonsTableModel extends AbstractTableModel {
 	private final String[] columnNames = {"ФИО", 
 			"Адрес",
 			"Моб. тел.", 
 			"Дом. тел."};
-	private ArrayList<Person> persons;
-	private int pageNumber = 0;
-	private int personsOnPage = 5;
-	private boolean cellsIsEditable = true;
+	private final int columnNumber = columnNames.length; 
+	private PersonsMainController controller;
+//	private PersonList persons;
 	
-	public PersonsTableModel() {
-		persons = new ArrayList<Person>();
-	}
-	
-	public PersonsTableModel(Person[] persons) {
-		this.persons = new ArrayList<Person>();
-		if(persons.length != 0) {
-			this.addPerson(persons);
-		}
+	public PersonsTableModel(PersonsMainController controller) {
+		this.controller = controller;
 	}
 	
 	public int getRowCount() {
-		return personsOnPage;
-	}
-
-	public void setRowCount(int personsOP) {
-		if(personsOP != 0)
-			personsOnPage = personsOP;
+		return controller.getEntryPerPage();
 	}
 
 	public int getColumnCount() {
-		return 4;
+		return columnNumber;
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		int rowI = rowIndex + pageNumber*personsOnPage;
-		if(rowI < persons.size()) {
+		if(rowIndex < getRowCount()) {
 			switch(columnIndex) {
-			case 0: return persons.get(rowI).getFIO();
-			case 1: return persons.get(rowI).getAddress();
-			case 2: return persons.get(rowI).getMobilePhoneNumber();
-			case 3: return persons.get(rowI).getHomePhoneNumber();
+			case 0: return controller.getPageEntry(rowIndex).getFIO();
+			case 1: return controller.getPageEntry(rowIndex).getAddress();
+			case 2: return controller.getPageEntry(rowIndex).getMobilePhoneNumber();
+			case 3: return controller.getPageEntry(rowIndex).getHomePhoneNumber();
 			}
 		}
 		return null;
 	}
 	
+	@Override
 	public String getColumnName(int columnIndex) {
 		return columnNames[columnIndex];
 	}
 
-	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return cellsIsEditable;
-	}
+//	public void setPageNumber(int pageNumber) {
+//		int pagesAmount = getPagesAmount();
+//		if(pageNumber < 0)
+//			return;
+//		else if(pageNumber < pagesAmount)
+//			this.pageNumber = pageNumber;
+//		else
+//			this.pageNumber = pagesAmount;
+//		fireTableDataChanged();
+//	}
 
-	public void makeCellsEditable(boolean b) {
-		cellsIsEditable = b;
-	}
-
-	public void addPerson(Person p) {
-		if((p != null) && (!this.persons.contains(p)))
-			persons.add(p);
-		fireTableDataChanged();
-	}
-	
-	public void addPerson(Person[] persons) {
-		for(Person p:persons) {
-			addPerson(p);
-		}
-		fireTableDataChanged();
-	}
-	
-	public void removePerson(Person p) {	
-		if(p != null) {
-			persons.remove(p);
-		}		
-		fireTableDataChanged();
-	}
-	
-	public Person getPerson(int ind) {
-		return persons.get(ind);
-	}
-	
-	public int getPersonsSize() {
-		return persons.size();
-	}
-
-	public int getPageNumber() {
-		return pageNumber;
-	}
-
-	public void setPageNumber(int pageNumber) {
-		int pagesAmount = getPagesAmount();
-		if(pageNumber < 0)
-			return;
-		else if(pageNumber < pagesAmount)
-			this.pageNumber = pageNumber;
-		else
-			this.pageNumber = pagesAmount;
-		fireTableDataChanged();
-	}
-
-	public Person[] search(Person personQ) {
-		ArrayList<Person> personAList = new ArrayList<Person>();
-		
-		for(Person base : persons) {
-			if((!personQ.getFirstName().equals("")) && 
-					(!base.getFirstName().equals(personQ.getFirstName()))) {
-				continue;
-			}
-			if((!personQ.getSecondName().equals("")) && 
-					(!base.getSecondName().equals(personQ.getSecondName()))) {
-				continue;
-			}
-			if((!personQ.getThirdName().equals("")) && 
-					(!base.getThirdName().equals(personQ.getThirdName()))) {
-				continue;
-			}
-			if((!personQ.getCity().equals("")) && 
-					(!base.getCity().equals(personQ.getCity()))) {
-				continue;
-			}
-			if((!personQ.getStreet().equals("")) && 
-					(!base.getStreet().equals(personQ.getStreet()))) {
-				continue;
-			}
-			if((personQ.getHouseNumber() != 0) && 
-					(base.getHouseNumber() != personQ.getHouseNumber())) {
-				continue;
-			}
-			if((personQ.getMobilePhoneNumber() != 0) && 
-					(base.getMobilePhoneNumber() != personQ.getMobilePhoneNumber())) {
-				continue;
-			}
-			if((personQ.getHomePhoneNumber() != 0) && 
-					(base.getHomePhoneNumber() != personQ.getHomePhoneNumber())) {
-				continue;
-			}
-			personAList.add(base);
-		}
-	
-		Person[] personA = new Person[personAList.size()];
-		int pAIterator = 0;
-		for(Person p : personAList) {
-			personA[pAIterator++] = p;
-		}
-			
-		return personA;
-	}
-	
-	public void cleanAll() {
-		persons = new ArrayList<Person>();
-		fireTableDataChanged();
-	}
-	
-	public String getStatus() {
-		
-		int pagesAmount = getPagesAmount();
-		String res = "<html><h3>Страница " + (pageNumber+1) +
-				" из " + (pagesAmount+1);
-		int perOnPage;
-		if(pageNumber == pagesAmount || pagesAmount == 0)
-			perOnPage = persons.size()%personsOnPage;
-		else
-			perOnPage = personsOnPage;
-		res += "<br> Выводится " + perOnPage + " записей на странице из "
-				+ personsOnPage + "<br> Всего " + persons.size()
-				+ " записей</h3></html>";
-		
-		return res;
-	}
-	
-	private int getPagesAmount() {
-		return (persons.size()/personsOnPage);
-	}
 
 }

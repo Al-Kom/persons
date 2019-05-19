@@ -5,18 +5,16 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
+import controllers.PersonsMainController;
 import persons_gui.PersonInputPanel;
 import persons_model.PersonsTableModel;
 
 public class AddButtonListener implements ActionListener {
-	private JLabel infoTextField;
-	private PersonsTableModel tableModel;
+	private PersonsMainController controller;
 	private PersonInputPanel inputPanel;
 	
-	public AddButtonListener(PersonsTableModel tableModel,
-			JLabel infoTextField) {
-		this.tableModel = tableModel;
-		this.infoTextField = infoTextField;
+	public AddButtonListener(PersonsMainController controller) {
+		this.controller = controller;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
@@ -44,10 +42,7 @@ public class AddButtonListener implements ActionListener {
 	
 	private class DialogActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			tableModel.addPerson(inputPanel.getPerson());
-			//update information field
-			if(infoTextField != null)
-				infoTextField.setText(tableModel.getStatus());
+			controller.addEntry(inputPanel.getPerson());
 		}
 	}
 }

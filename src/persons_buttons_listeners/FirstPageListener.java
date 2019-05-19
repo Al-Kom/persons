@@ -9,18 +9,18 @@ import persons_model.PersonsTableModel;
 
 public class FirstPageListener implements ActionListener {
 	private PersonsTableModel tableModel;
-	private JLabel infoTextField;
+	private JLabel statusLabel;
 	
 	public FirstPageListener(PersonsTableModel tableModel,
-			JLabel infoTextField) {
+			JLabel statusLabel) {
 		this.tableModel = tableModel;
-		this.infoTextField = infoTextField;
+		this.statusLabel = statusLabel;
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		tableModel.setPageNumber(0);
 		//update information field
-		if(infoTextField != null)
-			infoTextField.setText(tableModel.getStatus());
+		if(statusLabel != null)
+			statusLabel.setText(tableModel.getStatus());
 	}
 }

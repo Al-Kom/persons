@@ -3,7 +3,7 @@ package persons_buttons_listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import persons_gui.PersonsSearchAndRemoveDialog;
+import persons_gui.PersonsSearchDialog;
 import persons_model.PersonsTableModel;
 
 public class SearchButtonListener implements ActionListener {
@@ -15,7 +15,7 @@ public class SearchButtonListener implements ActionListener {
 	
 	public void actionPerformed(ActionEvent e) {
 		//open dialog for searching
-		new PersonsSearchAndRemoveDialog(tableModel,null,false);
+		new PersonsSearchDialog(tableModel,null,false);
 	}
 
 }

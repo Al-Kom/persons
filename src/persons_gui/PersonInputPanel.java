@@ -9,61 +9,36 @@ import javax.swing.JTextField;
 
 import persons_model.Person;
 
-public class PersonInputPanel extends JPanel {
-
-	private JTextField firstNameField;
-	private JTextField secondNameField;
-	private JTextField thirdNameField;
-	private JTextField mobilePHNField;
-	private JTextField cityField;
-	private JTextField streetField;
-	private JTextField houseNField;
-	private JTextField homePHNField;
+public class PersonInputPanel {
+	protected JPanel panel;
+	protected JTextField[] personFields;
+	protected final String[] labelNames = {
+			"Фамилия","Город","Имя","Улица",
+			"Отчество","Дом","Моб. тел.","Дом. тел."
+	}; 
 	
 	public PersonInputPanel() {
-
-		JPanel FIOPanel = new JPanel();
-			JLabel firstNameLabel = new JLabel("Имя");
-			JLabel secondNameLabel = new JLabel("Фамилия");
-			JLabel thirdNameLabel = new JLabel("Отчество");
-			JLabel mobilePHNLabel = new JLabel("Моб. тел.");
-			firstNameField = new JTextField();
-			secondNameField = new JTextField();
-			thirdNameField = new JTextField();
-			mobilePHNField = new JTextField();
-		JPanel addressDataPanel = new JPanel();
-			JLabel cityLabel = new JLabel("Город");
-			JLabel streetLabel = new JLabel("Улица");
-			JLabel houseNLabel = new JLabel("Дом");
-			JLabel homePHNLabel = new JLabel("Дом. тел.");
-			streetField = new JTextField();
-			cityField = new JTextField();
-			houseNField = new JTextField();
-			homePHNField = new JTextField();
-			
-		this.setLayout( new BoxLayout(this, BoxLayout.X_AXIS));
-		this.add(FIOPanel);
-			FIOPanel.setLayout(new GridLayout(4,2));
-			FIOPanel.add(secondNameLabel);
-			FIOPanel.add(secondNameField);
-			FIOPanel.add(firstNameLabel);
-			FIOPanel.add(firstNameField);
-			FIOPanel.add(thirdNameLabel);
-			FIOPanel.add(thirdNameField);
-			FIOPanel.add(mobilePHNLabel);
-			FIOPanel.add(mobilePHNField);
-		this.add(addressDataPanel);
-			addressDataPanel.setLayout( new GridLayout(4,2));
-			addressDataPanel.add(cityLabel);
-			addressDataPanel.add(cityField);
-			addressDataPanel.add(streetLabel);
-			addressDataPanel.add(streetField);
-			addressDataPanel.add(houseNLabel);
-			addressDataPanel.add(houseNField);
-			addressDataPanel.add(homePHNLabel);
-			addressDataPanel.add(homePHNField);
+		panel = new JPanel();
+		personFields = new JTextField[8];
+		for(JTextField tf:personFields) {
+			tf = new JTextField();
+		}
 	}
 	
+	public JPanel getPanel() {
+		addComponents();
+		return panel;
+	}
+	
+	protected void addComponents() {
+		panel.setLayout( new GridLayout(4,4));
+		for(int i = 0; i < 8; i++) {
+			panel.add( new JLabel(labelNames[i]));
+			panel.add(personFields[i]);
+		}
+		panel.setSize(700, 200);
+	}
+
 	public Person getPerson() {
 		Person person = new Person(
 				getFirstName(),
@@ -77,36 +52,36 @@ public class PersonInputPanel extends JPanel {
 		return person;
 	}
 	
-	public String getFirstName() {
-		return firstNameField.getText();
+	protected String getFirstName() {
+		return personFields[0].getText();
 	}
 	
-	public String getSecondName() {
-		return secondNameField.getText();
+	protected String getSecondName() {
+		return personFields[1].getText();
 	}
 	
-	public String getThirdName() {
-		return thirdNameField.getText();
+	protected String getThirdName() {
+		return personFields[2].getText();
 	}
 	
-	public String getMobilePHN() {
-		return mobilePHNField.getText();
+	protected String getMobilePHN() {
+		return personFields[3].getText();
 	}
 	
-	public String getCity() {
-		return cityField.getText();
+	protected String getCity() {
+		return personFields[4].getText();
 	}
 	
-	public String getStreet() {
-		return streetField.getText();
+	protected String getStreet() {
+		return personFields[5].getText();
 	}
 	
-	public String getHouseN() {
-		return houseNField.getText();
+	protected String getHouseN() {
+		return personFields[6].getText();
 	}
 	
-	public String getHomePHN() {
-		return homePHNField.getText();
+	protected String getHomePHN() {
+		return personFields[7].getText();
 	}
 	
 	

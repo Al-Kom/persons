@@ -9,12 +9,12 @@ import persons_model.PersonsTableModel;
 
 public class PrevPageListener implements ActionListener {
 	private PersonsTableModel tableModel;
-	private JLabel infoTextField;
+	private JLabel statusLabel;
 	
 	public PrevPageListener(PersonsTableModel tableModel,
-			JLabel infoTextField) {
+			JLabel statusLabel) {
 		this.tableModel = tableModel;
-		this.infoTextField = infoTextField;
+		this.statusLabel = statusLabel;
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -22,7 +22,7 @@ public class PrevPageListener implements ActionListener {
 		if(page >= 0)
 			tableModel.setPageNumber(page);
 		//update information field
-		if(infoTextField != null)
-			infoTextField.setText(tableModel.getStatus());
+		if(statusLabel != null)
+			statusLabel.setText(tableModel.getStatus());
 	}
 }

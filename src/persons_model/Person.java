@@ -19,10 +19,10 @@ public class Person {
 		setHouseNumber(0);
 		setMobilePhoneNumber(0);
 		setHomePhoneNumber(0);
-System.out.println("new person " + getFIO());
 	}
 	
 	public Person(Person p) {
+		this();
 		if(p != null) {
 			firstName = p.getFirstName();
 			secondName = p.getSecondName();
@@ -32,21 +32,20 @@ System.out.println("new person " + getFIO());
 			houseNumber = p.getHouseNumber();
 			mobilePhoneNumber = p.getMobilePhoneNumber();
 			homePhoneNumber = p.getHomePhoneNumber();
-		} else {
-			setFirstName("");
-			setSecondName("");
-			setThirdName("");
-			setStreet("");
-			setCity("");
-			setHouseNumber(0);
-			setMobilePhoneNumber(0);
-			setHomePhoneNumber(0);
 		}
 System.out.println("new person " + getFIO());
 	}
 
 	public Person(String firstN, String secondN, String thirdN, String city,
 			String street, int houseN, long mobilePHN, long homePHN) {
+		this(firstN, secondN, thirdN, city,	street,
+				String.valueOf(houseN),
+				String.valueOf(mobilePHN),
+				String.valueOf(homePHN));
+	}
+
+	public Person(String firstN, String secondN, String thirdN, String city,
+			String street, String houseN, String mobilePHN, String homePHN) {
 		setFirstName(firstN);
 		setSecondName(secondN);
 		setThirdName(thirdN);
@@ -57,19 +56,6 @@ System.out.println("new person " + getFIO());
 		setHomePhoneNumber(homePHN);
 System.out.println("new person " + getFIO());
 	}
-
-		public Person(String firstN, String secondN, String thirdN, String city,
-				String street, String houseN, String mobilePHN, String homePHN) {
-			setFirstName(firstN);
-			setSecondName(secondN);
-			setThirdName(thirdN);
-			setCity(city);
-			setStreet(street);
-			setHouseNumber(houseN);
-			setMobilePhoneNumber(mobilePHN);
-			setHomePhoneNumber(homePHN);
-System.out.println("new person " + getFIO());
-		}
 	
 	public String getFirstName() {
 		return firstName;
@@ -159,6 +145,7 @@ System.out.println("new person " + getFIO());
 		} catch(NumberFormatException ex) {}
 	}
 	
+	@Override
 	public String toString() {
 		String res = getFIO() + "," + getAddress() + ","
 				+ mobilePhoneNumber + "," + homePhoneNumber;
