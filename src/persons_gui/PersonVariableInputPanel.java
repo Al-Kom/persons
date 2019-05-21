@@ -21,8 +21,8 @@ public class PersonVariableInputPanel extends PersonInputPanel{
 	public PersonVariableInputPanel() {
 		super();
 		checkBoxes = new JCheckBox[8];
-		for(JCheckBox ch:checkBoxes) {
-			ch = new JCheckBox();
+		for(int i = 0; i < 8; i++) {
+			checkBoxes[i] = new JCheckBox();
 		}
 	}
 	
@@ -30,11 +30,11 @@ public class PersonVariableInputPanel extends PersonInputPanel{
 	protected void addComponents() {
 		panel.setLayout( new GridLayout(4,6));
 		for(int i = 0; i < 8; i++) {
-			panel.add(checkBoxes[i]);
 			panel.add( new JLabel(labelNames[i]));
 			panel.add(personFields[i]);
-		}	
-		panel.setSize(700, 200);
+			panel.add(checkBoxes[i]);
+		}
+		panel.setSize(500, 100);
 	}
 	
 	public ArrayList<Integer> getVariableParametres() {

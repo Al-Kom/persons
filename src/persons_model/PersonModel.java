@@ -1,6 +1,6 @@
 package persons_model;
 
-public class Person {
+public class PersonModel {
 	private String firstName;
 	private String secondName;
 	private String thirdName;
@@ -10,7 +10,7 @@ public class Person {
 	private long mobilePhoneNumber;
 	private long homePhoneNumber;
 
-	public Person() {
+	public PersonModel() {
 		setFirstName("");
 		setSecondName("");
 		setThirdName("");
@@ -21,7 +21,7 @@ public class Person {
 		setHomePhoneNumber(0);
 	}
 	
-	public Person(Person p) {
+	public PersonModel(PersonModel p) {
 		this();
 		if(p != null) {
 			firstName = p.getFirstName();
@@ -33,10 +33,9 @@ public class Person {
 			mobilePhoneNumber = p.getMobilePhoneNumber();
 			homePhoneNumber = p.getHomePhoneNumber();
 		}
-System.out.println("new person " + getFIO());
 	}
 
-	public Person(String firstN, String secondN, String thirdN, String city,
+	public PersonModel(String firstN, String secondN, String thirdN, String city,
 			String street, int houseN, long mobilePHN, long homePHN) {
 		this(firstN, secondN, thirdN, city,	street,
 				String.valueOf(houseN),
@@ -44,7 +43,7 @@ System.out.println("new person " + getFIO());
 				String.valueOf(homePHN));
 	}
 
-	public Person(String firstN, String secondN, String thirdN, String city,
+	public PersonModel(String firstN, String secondN, String thirdN, String city,
 			String street, String houseN, String mobilePHN, String homePHN) {
 		setFirstName(firstN);
 		setSecondName(secondN);
@@ -54,7 +53,6 @@ System.out.println("new person " + getFIO());
 		setHouseNumber(houseN);
 		setMobilePhoneNumber(mobilePHN);
 		setHomePhoneNumber(homePHN);
-System.out.println("new person " + getFIO());
 	}
 	
 	public String getFirstName() {
@@ -110,7 +108,7 @@ System.out.println("new person " + getFIO());
 			int houseN = 0;
 			houseN = Integer.parseInt(sHouseNumber);
 			setHouseNumber(houseN);
-		} catch(NumberFormatException ex) {}
+		} catch(NumberFormatException ex) {	}
 	}
 	
 	public long getMobilePhoneNumber() {
@@ -126,7 +124,7 @@ System.out.println("new person " + getFIO());
 			long mphn = 0;
 			mphn = Long.parseLong(mobilePHN);
 			setMobilePhoneNumber(mphn);
-		} catch(NumberFormatException ex) {}
+		} catch(NumberFormatException ex) {	}
 	}
 	
 	public long getHomePhoneNumber() {
@@ -142,7 +140,7 @@ System.out.println("new person " + getFIO());
 			long hphn = 0;
 			hphn = Long.parseLong(homePHN);
 			setHomePhoneNumber(hphn);
-		} catch(NumberFormatException ex) {}
+		} catch(NumberFormatException ex) {	}
 	}
 	
 	@Override
@@ -160,5 +158,9 @@ System.out.println("new person " + getFIO());
 	public String getAddress() {
 		String res = city + "," + street + "," + houseNumber;
 		return res;
+	}
+	
+	public boolean equals(PersonModel person) {
+		return this == person;
 	}
 }

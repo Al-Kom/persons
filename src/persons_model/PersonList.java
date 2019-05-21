@@ -1,12 +1,7 @@
 package persons_model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 public class PersonList {
 	
@@ -19,33 +14,43 @@ public class PersonList {
 	public static final int SEARCH_BY_MOBILE_PHONE_NUMBER = 6;
 	public static final int SEARCH_BY_HOME_PHONE_NUMBER = 7;
 	
-	private ArrayList<Person> persons;
-	private ArrayList<ChangeListener> listenerList;
+	
+	
+	
+	
+	private ArrayList<PersonModel> persons;
 	
 	public PersonList() {
-		persons = new ArrayList<Person>();
-		listenerList = new ArrayList<ChangeListener>();
-		fireDataChanged();
+		persons = new ArrayList<PersonModel>();
 	}
 	
-	public void add(Person p) {
-		if((p != null) && (!persons.contains(p)))
-			persons.add(p);
-		fireDataChanged();		
+	public void add(PersonModel p) {		
+		if(p != null) {
+			//checking if persons contains p
+			ArrayList<Integer> allParams = new ArrayList<Integer>();
+			allParams.add(SEARCH_BY_FIRST_NAME);
+			allParams.add(SEARCH_BY_THIRD_NAME);
+			allParams.add(SEARCH_BY_CITY);
+			allParams.add(SEARCH_BY_STREET);
+			allParams.add(SEARCH_BY_HOUSE_NUMBER);
+			allParams.add(SEARCH_BY_MOBILE_PHONE_NUMBER);
+			allParams.add(SEARCH_BY_HOME_PHONE_NUMBER);
+			if(search(p,allParams).size() == 0)
+				persons.add(p);
+		}				
 	}
 	
-	public void add(List<Person> pArr) {
-		for(Person p:pArr) {
+	public void add(List<PersonModel> pArr) {
+		for(PersonModel p:pArr) {
 			add(p);
 		}
-		fireDataChanged();		
 	}
 	
-	public void remove(Person p) {
+	public void remove(PersonModel p) {
 		persons.remove(p);
 	}
 	
-	public Person get(int ind) {
+	public PersonModel get(int ind) {
 		return persons.get(ind);
 	}
 	
@@ -53,40 +58,40 @@ public class PersonList {
 		return persons.size();
 	}
 
-	public ArrayList<Person> search(Person person, ArrayList<Integer> searchParams) {
-		ArrayList<Person> foundedList = new ArrayList<Person>();
+	public ArrayList<PersonModel> search(PersonModel personModel, ArrayList<Integer> searchParams) {
+		ArrayList<PersonModel> foundedList = new ArrayList<PersonModel>();
 		
-		for(Person base : persons) {
+		for(PersonModel base : persons) {
 			if(searchParams.contains(SEARCH_BY_FIRST_NAME) && 
-					(!base.getFirstName().equals(person.getFirstName()))) {
+					(!base.getFirstName().equals(personModel.getFirstName()))) {
 				continue;
 			}
 			if(searchParams.contains(SEARCH_BY_SECOND_NAME) && 
-					(!base.getSecondName().equals(person.getSecondName()))) {
+					(!base.getSecondName().equals(personModel.getSecondName()))) {
 				continue;
 			}
 			if(searchParams.contains(SEARCH_BY_THIRD_NAME) && 
-					(!base.getThirdName().equals(person.getThirdName()))) {
+					(!base.getThirdName().equals(personModel.getThirdName()))) {
 				continue;
 			}
 			if(searchParams.contains(SEARCH_BY_CITY) && 
-					(!base.getCity().equals(person.getCity()))) {
+					(!base.getCity().equals(personModel.getCity()))) {
 				continue;
 			}
 			if(searchParams.contains(SEARCH_BY_STREET) && 
-					(!base.getStreet().equals(person.getStreet()))) {
+					(!base.getStreet().equals(personModel.getStreet()))) {
 				continue;
 			}
 			if(searchParams.contains(SEARCH_BY_HOUSE_NUMBER) &&
-					(base.getHouseNumber() != person.getHouseNumber())) {
+					(base.getHouseNumber() != personModel.getHouseNumber())) {
 				continue;
 			}
 			if(searchParams.contains(SEARCH_BY_MOBILE_PHONE_NUMBER) &&
-					(base.getMobilePhoneNumber() != person.getMobilePhoneNumber())) {
+					(base.getMobilePhoneNumber() != personModel.getMobilePhoneNumber())) {
 				continue;
 			}
 			if(searchParams.contains(SEARCH_BY_HOME_PHONE_NUMBER) &&
-					(base.getHomePhoneNumber() != person.getHomePhoneNumber())) {
+					(base.getHomePhoneNumber() != personModel.getHomePhoneNumber())) {
 				continue;
 			}
 			foundedList.add(base);
@@ -96,19 +101,7 @@ public class PersonList {
 	}
 	
 	public void cleanAll() {
-		persons = new ArrayList<Person>();
-		fireDataChanged();
-	}
-	
-	
-	public void addChangeListener(ChangeListener listener) {
-		listenerList.add(listener);
+		persons = new ArrayList<PersonModel>();
 	}
 
-	private void fireDataChanged() {
-		ChangeEvent evt = new ChangeEvent(this);
-		for(ChangeListener listener:listenerList) {
-			listener.stateChanged(evt);
-		}
-	}
 }

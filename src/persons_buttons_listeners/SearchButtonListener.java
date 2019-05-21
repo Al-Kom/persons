@@ -3,19 +3,17 @@ package persons_buttons_listeners;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import persons_gui.PersonsSearchDialog;
-import persons_model.PersonsTableModel;
+import controllers.PersonsMainController;
 
 public class SearchButtonListener implements ActionListener {
-	private PersonsTableModel tableModel;
+	private PersonsMainController controller;
 
-	public SearchButtonListener(PersonsTableModel tableModel) {
-		this.tableModel = tableModel;
+	public SearchButtonListener(PersonsMainController controller) {
+		this.controller = controller;
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//open dialog for searching
-		new PersonsSearchDialog(tableModel,null,false);
+		controller.showSearchDialog();
 	}
 
 }

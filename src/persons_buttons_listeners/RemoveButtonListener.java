@@ -13,8 +13,7 @@ public class RemoveButtonListener implements ActionListener {
 	}
 	
 	public void actionPerformed(ActionEvent e) {
-		//open dialog for searching and removing
-		controller.showSearchDialog();
+		controller.showRemoveDialog();
 	}
 	
 }

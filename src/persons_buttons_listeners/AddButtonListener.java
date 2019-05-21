@@ -7,7 +7,6 @@ import javax.swing.*;
 
 import controllers.PersonsMainController;
 import persons_gui.PersonInputPanel;
-import persons_model.PersonsTableModel;
 
 public class AddButtonListener implements ActionListener {
 	private PersonsMainController controller;
@@ -28,14 +27,14 @@ public class AddButtonListener implements ActionListener {
 		
 		inputPanel = new PersonInputPanel();
 		
-		JButton addButton = new JButton("Добавить");
+		JButton addButton = new JButton("Добавить запись");
 			addButton.addActionListener(new DialogActionListener());
 		
 		dialog.setLayout(new BoxLayout(dialog.getContentPane(), BoxLayout.Y_AXIS));
-		dialog.add(inputPanel);
+		dialog.add(inputPanel.getPanel());
 		dialog.add(addButton);
 		
-		dialog.setSize(700, 100);
+		dialog.setSize(500, 120);
 		dialog.setVisible(true);
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	}

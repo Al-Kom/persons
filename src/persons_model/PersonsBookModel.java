@@ -9,33 +9,36 @@ public class PersonsBookModel {
 	
 	public PersonsBookModel() {
 		persons = new PersonList();
+		setEntryPerPage(1);
 		setPageNumber(0);
-		setEntryPerPage(5);
 	}
 	
-	public void addEntry(Person person) {
-		persons.add(person);
+	public void addEntry(PersonModel personModel) {
+		persons.add(personModel);
 	}
 
-	public void addEntry(ArrayList<Person> pArr) {
+	public void addEntry(ArrayList<PersonModel> pArr) {
 		persons.add(pArr);
 	}
-	
-	public String getStatus() {
-		String res = "<html><h3>Страница " + (pageNumber + 1) +
-				" из " + (getPagesAmount() + 1);
-		
-		int perOnPage;
-		if(getPagesAmount() == 0 || pageNumber == getPagesAmount())
-			perOnPage = persons.size() % entryPerPage;
-		else
-			perOnPage = entryPerPage;
-		
-		res += "<br> Выводится " + perOnPage + " записей на странице из "
-				+ entryPerPage + "<br> Всего " + persons.size()
-				+ " записей</h3></html>";
-	
-		return res;
+
+	public int removeEntry(ArrayList<PersonModel> entryArr) {
+		int personsBeforeRemoving = persons.size();
+		for(PersonModel p:entryArr) {
+			persons.remove(p);
+		}
+		//update page
+		setEntryPerPage(getEntryPerPage());
+		setPageNumber(getPageNumber());
+		return (personsBeforeRemoving - persons.size());
+	}
+
+	public PersonModel getPageEntry(int entryNumber) {
+		int index = entryNumber + getPageNumber()*getEntryPerPage();
+		return persons.get(index);
+	}
+
+	public ArrayList<PersonModel> search(PersonModel personModel, ArrayList<Integer> searchParams) {
+		return persons.search(personModel, searchParams);
 	}
 
 	public int getPageNumber() {
@@ -43,13 +46,12 @@ public class PersonsBookModel {
 	}
 
 	public void setPageNumber(int pageNumber) {
-		if(pageNumber < 0)
+		if(pageNumber < 0 || getPagesAmount() < 0)
 			return;
 		else if(pageNumber < getPagesAmount())
 			this.pageNumber = pageNumber;
 		else
 			this.pageNumber = getPagesAmount();
-		/*	update	*/
 	}
 
 	public int getEntryPerPage() {
@@ -57,19 +59,39 @@ public class PersonsBookModel {
 	}
 
 	public void setEntryPerPage(int entryPerPage) {
-		this.entryPerPage = entryPerPage;
+		if(entryPerPage < 1 || persons.size() < 1)
+			this.entryPerPage = 1;
+		else if(entryPerPage > persons.size())
+			this.entryPerPage = persons.size();
+		else
+			this.entryPerPage = entryPerPage;
+		//update page
+		setPageNumber(getPageNumber());
 	}
 
-	private int getPagesAmount() {
+	public int getEntryPerCurrentPage() {
+		if(getPagesAmount() == 0 || getPageNumber() == getPagesAmount())
+			return (persons.size() % getEntryPerPage());
+		else
+			return getEntryPerPage();
+	}
+
+	public int getPagesAmount() {
 		return (persons.size()/getEntryPerPage());
 	}
 
-	public Person getPageEntry(int entryNumber) {
-		int index = entryNumber + getPageNumber()*getEntryPerPage();
-		return persons.get(index);
+	public PageModel getCurrentPage() {
+		PersonList pageEntries =  new PersonList();
+		int firstIndex = getPageNumber()*getEntryPerPage();
+		int lastIndex = getEntryPerCurrentPage() + firstIndex;
+		for(int i = firstIndex; i < lastIndex; i++) {
+			pageEntries.add(persons.get(i));
+		}
+		return new PageModel(pageEntries);
 	}
 
-	public ArrayList<Person> search(Person person, ArrayList<Integer> searchParams) {
-		return persons.search(person, searchParams);
+	public int getEntryAmount() {
+		return persons.size();
 	}
+
 }

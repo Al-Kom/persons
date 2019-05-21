@@ -5,15 +5,15 @@ import java.awt.event.ActionListener;
 
 import controllers.PersonsBookController;
 
-public class NextPageListener implements ActionListener {
+public class IncreaseEntryPerPageButtonListener implements ActionListener {
 	private PersonsBookController controller;
-
-	public NextPageListener(PersonsBookController controller) {
+	
+	public IncreaseEntryPerPageButtonListener(PersonsBookController controller) {
 		this.controller = controller;
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		controller.increasePageNumber();
+		controller.increaseEntryPerPage();
 	}
 
 }

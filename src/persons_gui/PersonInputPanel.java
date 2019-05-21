@@ -2,12 +2,11 @@ package persons_gui;
 
 import java.awt.GridLayout;
 
-import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import persons_model.Person;
+import persons_model.PersonModel;
 
 public class PersonInputPanel {
 	protected JPanel panel;
@@ -20,8 +19,8 @@ public class PersonInputPanel {
 	public PersonInputPanel() {
 		panel = new JPanel();
 		personFields = new JTextField[8];
-		for(JTextField tf:personFields) {
-			tf = new JTextField();
+		for(int i = 0; i < 8; i++) {
+			personFields[i] = new JTextField();
 		}
 	}
 	
@@ -36,11 +35,11 @@ public class PersonInputPanel {
 			panel.add( new JLabel(labelNames[i]));
 			panel.add(personFields[i]);
 		}
-		panel.setSize(700, 200);
+		panel.setSize(500, 100);
 	}
 
-	public Person getPerson() {
-		Person person = new Person(
+	public PersonModel getPerson() {
+		PersonModel personModel = new PersonModel(
 				getFirstName(),
 				getSecondName(),
 				getThirdName(),
@@ -49,34 +48,34 @@ public class PersonInputPanel {
 				getHouseN(),
 				getMobilePHN(),
 				getHomePHN());
-		return person;
-	}
-	
-	protected String getFirstName() {
-		return personFields[0].getText();
+		return personModel;
 	}
 	
 	protected String getSecondName() {
-		return personFields[1].getText();
-	}
-	
-	protected String getThirdName() {
-		return personFields[2].getText();
-	}
-	
-	protected String getMobilePHN() {
-		return personFields[3].getText();
+		return personFields[0].getText();
 	}
 	
 	protected String getCity() {
-		return personFields[4].getText();
+		return personFields[1].getText();
+	}
+	
+	protected String getFirstName() {
+		return personFields[2].getText();
 	}
 	
 	protected String getStreet() {
-		return personFields[5].getText();
+		return personFields[3].getText();
+	}
+	
+	protected String getThirdName() {
+		return personFields[4].getText();
 	}
 	
 	protected String getHouseN() {
+		return personFields[5].getText();
+	}
+	
+	protected String getMobilePHN() {
 		return personFields[6].getText();
 	}
 	

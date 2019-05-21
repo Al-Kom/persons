@@ -1,6 +1,7 @@
 package controllers;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.SAXParser;
@@ -10,35 +11,27 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import persons_model.Person;
+import persons_model.PersonModel;
 
 public class PersonsLoader {
-	private ArrayList<Person> personList;
+	private ArrayList<PersonModel> loadedList;
 	
-	public Person[] loadPersonsFromFile(File file) {
-		personList = new ArrayList<Person>();
+	public PersonsLoader(PersonsBookController bookController, File file) {
+		loadedList = new ArrayList<PersonModel>();
 		
 		try {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser parser = factory.newSAXParser();
 			
 			parser.parse(file, new PersonXMLHandler());
-			
-		} catch (NumberFormatException ex) {
-			System.out.println("Error when parsing phones. " + ex.getLocalizedMessage());
-			ex.printStackTrace();
+		} catch (FileNotFoundException ex) {
+			System.out.println("Ошибка! " + ex.getMessage());
 		} catch (Exception ex) {
-			System.out.println("Unknown exception: ");
+			System.out.println("Неизвестная ошибка! " + ex.getMessage());
 			ex.printStackTrace();
 		}
 		
-		Person [] personArray = new Person[personList.size()];
-		int pAIterator = 0;
-		for(Person p : personList) {
-			personArray[pAIterator++] = p;
-		}
-		
-		return personArray;
+		bookController.addEntry(loadedList);
 	}
 	
 	private class PersonXMLHandler extends DefaultHandler {
@@ -47,9 +40,9 @@ public class PersonsLoader {
 		String tName;
 		String city;
 		String street;
-		int houseN;
-		long mobilePHN;
-		long homePHN;
+		String houseN;
+		String mobilePHN;
+		String homePHN;
 		
 		@Override
 		public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
@@ -69,29 +62,29 @@ public class PersonsLoader {
             	street = attributes.getValue("value");
             }
 			if(qName.equals("houseN")) {
-				houseN = Integer.parseInt(attributes.getValue("value"));
+				houseN = attributes.getValue("value");
             }
 			if(qName.equals("mobilePHN")) {
-            	mobilePHN = Long.parseLong(attributes.getValue("value"));
+            	mobilePHN = attributes.getValue("value");
             }
 			if(qName.equals("homePHN")) {
-            	homePHN = Long.parseLong(attributes.getValue("value"));
+            	homePHN = attributes.getValue("value");
             }
         }
 		
 		@Override
         public void endElement(String uri, String localName, String qName) throws SAXException {
 			if(qName.equals("person")) {
-            	Person p = new Person();
-            	p.setFirstName(fName);
-            	p.setSecondName(sName);
-            	p.setThirdName(tName);
-            	p.setCity(city);
-            	p.setStreet(street);
-            	p.setHouseNumber(houseN);
-            	p.setMobilePhoneNumber(mobilePHN);
-            	p.setHomePhoneNumber(homePHN);
-            	personList.add(p);
+            	PersonModel p = new PersonModel(
+            			fName,
+            			sName,
+            			tName,
+            			city,
+            			street,
+            			houseN,
+            			mobilePHN,
+            			homePHN);
+            	loadedList.add(p);
             }
         }
 	}

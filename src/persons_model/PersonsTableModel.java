@@ -2,36 +2,32 @@ package persons_model;
 
 import javax.swing.table.AbstractTableModel;
 
-import controllers.PersonsMainController;
-
 public class PersonsTableModel extends AbstractTableModel {
 	private final String[] columnNames = {"ФИО", 
 			"Адрес",
 			"Моб. тел.", 
 			"Дом. тел."};
-	private final int columnNumber = columnNames.length; 
-	private PersonsMainController controller;
-//	private PersonList persons;
+	private PageModel page;
 	
-	public PersonsTableModel(PersonsMainController controller) {
-		this.controller = controller;
+	public PersonsTableModel() {
+		page = new PageModel();
 	}
 	
 	public int getRowCount() {
-		return controller.getEntryPerPage();
+		return page.getEntryAmount();
 	}
 
 	public int getColumnCount() {
-		return columnNumber;
+		return columnNames.length;
 	}
 
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if(rowIndex < getRowCount()) {
 			switch(columnIndex) {
-			case 0: return controller.getPageEntry(rowIndex).getFIO();
-			case 1: return controller.getPageEntry(rowIndex).getAddress();
-			case 2: return controller.getPageEntry(rowIndex).getMobilePhoneNumber();
-			case 3: return controller.getPageEntry(rowIndex).getHomePhoneNumber();
+			case 0: return page.getEntry(rowIndex).getFIO();
+			case 1: return page.getEntry(rowIndex).getAddress();
+			case 2: return page.getEntry(rowIndex).getMobilePhoneNumber();
+			case 3: return page.getEntry(rowIndex).getHomePhoneNumber();
 			}
 		}
 		return null;
@@ -42,16 +38,9 @@ public class PersonsTableModel extends AbstractTableModel {
 		return columnNames[columnIndex];
 	}
 
-//	public void setPageNumber(int pageNumber) {
-//		int pagesAmount = getPagesAmount();
-//		if(pageNumber < 0)
-//			return;
-//		else if(pageNumber < pagesAmount)
-//			this.pageNumber = pageNumber;
-//		else
-//			this.pageNumber = pagesAmount;
-//		fireTableDataChanged();
-//	}
+	public void setPage(PageModel page) {
+		this.page = page;
+	}
 
 
 }

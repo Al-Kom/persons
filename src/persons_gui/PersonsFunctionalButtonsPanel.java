@@ -4,20 +4,20 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
+
+import controllers.PersonsMainController;
 
 import persons_buttons_listeners.AddButtonListener;
 import persons_buttons_listeners.LoadButtonListener;
 import persons_buttons_listeners.RemoveButtonListener;
 import persons_buttons_listeners.SaveButtonListener;
 import persons_buttons_listeners.SearchButtonListener;
-import persons_model.PersonsTableModel;
 
 public class PersonsFunctionalButtonsPanel {
 	private JPanel funPanel;
 
-	public PersonsFunctionalButtonsPanel(PersonsTableModel tableModel,
-			JLabel statusLabel) {
+	public PersonsFunctionalButtonsPanel(PersonsMainController controller) {
+
 		funPanel = new JPanel();
 			JButton addButton = new JButton("add");
 			JButton removeButton = new JButton("remove");
@@ -25,15 +25,15 @@ public class PersonsFunctionalButtonsPanel {
 			JButton saveButton = new JButton("save");
 			JButton loadButton = new JButton("load");
 			addButton.addActionListener(
-					new AddButtonListener(tableModel, statusLabel));
+					new AddButtonListener(controller));
 			removeButton.addActionListener( 
-					new RemoveButtonListener(tableModel, statusLabel));
+					new RemoveButtonListener(controller));
 			searchButton.addActionListener(
-					new SearchButtonListener(tableModel));
+					new SearchButtonListener(controller));
 			saveButton.addActionListener(
-					new SaveButtonListener(tableModel));
+					new SaveButtonListener(controller));
 			loadButton.addActionListener(
-					new LoadButtonListener(tableModel, statusLabel));
+					new LoadButtonListener(controller));
 
 		funPanel.setLayout( new FlowLayout());
 		funPanel.add(addButton);
@@ -42,7 +42,7 @@ public class PersonsFunctionalButtonsPanel {
 		funPanel.add(saveButton);
 		funPanel.add(loadButton);
 	}
-	
+
 	public JPanel getPanel() {
 		return funPanel;
 	}
