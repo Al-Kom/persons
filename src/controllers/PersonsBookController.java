@@ -30,13 +30,13 @@ public class PersonsBookController {
 		updateBookPanel();
 	}
 
-	public void addEntry(ArrayList<PersonModel> pArr) {
-		book.addEntry(pArr);
+	public void addEntry(ArrayList<PersonModel> entryList) {
+		book.addEntry(entryList);
 		updateBookPanel();
 	}
 
-	public int removeEntry(ArrayList<PersonModel> founded) {
-		int removedAmount = book.removeEntry(founded);
+	public int removeEntry(ArrayList<PersonModel> entryList) {
+		int removedAmount = book.removeEntry(entryList);
 		updateBookPanel();
 		return removedAmount;
 	}

@@ -29,21 +29,6 @@ public class PersonsMainController {
 		bookController.addEntry(personModel);
 	}
 
-//	//delegate
-//	public int getEntryPerPage() {
-//		return bookController.getEntryPerPage();
-//	}
-//
-//	//delegate
-//	public Person getPageEntry(int entryNumber) {
-//		return bookController.getPageEntry(entryNumber);
-//	}
-//
-//	//delegate
-//	public String getBookStatus() {
-//		return bookController.getStatus();
-//	}
-
 	public void showSearchDialog() {
 		searchDialog = new PersonsSearchDialog(this);
 		searchDialog.showDialog();

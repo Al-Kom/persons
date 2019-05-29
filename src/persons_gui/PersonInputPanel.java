@@ -9,17 +9,19 @@ import javax.swing.JTextField;
 import persons_model.PersonModel;
 
 public class PersonInputPanel {
-	protected JPanel panel;
-	protected JTextField[] personFields;
-	protected final String[] labelNames = {
+	private final int GRIDLAYOUT_ROW_NUMBER = 4;
+	private final int GRIDLAYOUT_COLUMN_NUMBER = 4;
+	protected final String[] personParametres = {
 			"Фамилия","Город","Имя","Улица",
 			"Отчество","Дом","Моб. тел.","Дом. тел."
-	}; 
+	};
+	protected JPanel panel;
+	protected JTextField[] personFields;
 	
 	public PersonInputPanel() {
 		panel = new JPanel();
-		personFields = new JTextField[8];
-		for(int i = 0; i < 8; i++) {
+		personFields = new JTextField[personParametres.length];
+		for(int i = 0; i < personFields.length; i++) {
 			personFields[i] = new JTextField();
 		}
 	}
@@ -30,9 +32,10 @@ public class PersonInputPanel {
 	}
 	
 	protected void addComponents() {
-		panel.setLayout( new GridLayout(4,4));
-		for(int i = 0; i < 8; i++) {
-			panel.add( new JLabel(labelNames[i]));
+		panel.setLayout(
+				new GridLayout(GRIDLAYOUT_ROW_NUMBER,GRIDLAYOUT_COLUMN_NUMBER));
+		for(int i = 0; i < personParametres.length; i++) {
+			panel.add( new JLabel(personParametres[i]));
 			panel.add(personFields[i]);
 		}
 		panel.setSize(500, 100);

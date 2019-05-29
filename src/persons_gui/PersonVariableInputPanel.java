@@ -7,6 +7,9 @@ import javax.swing.JLabel;
 import javax.swing.JCheckBox;
 
 public class PersonVariableInputPanel extends PersonInputPanel{
+	private final int GRIDLAYOUT_ROW_NUMBER = 4;
+	private final int GRIDLAYOUT_COLUMN_NUMBER = 6;
+	
 	public static final int FIRST_NAME_SELECTED = 0;
 	public static final int SECOND_NAME_SELECTED = 1;
 	public static final int THIRD_NAME_SELECTED = 2;
@@ -20,17 +23,18 @@ public class PersonVariableInputPanel extends PersonInputPanel{
 	
 	public PersonVariableInputPanel() {
 		super();
-		checkBoxes = new JCheckBox[8];
-		for(int i = 0; i < 8; i++) {
+		checkBoxes = new JCheckBox[personParametres.length];
+		for(int i = 0; i < checkBoxes.length; i++) {
 			checkBoxes[i] = new JCheckBox();
 		}
 	}
 	
 	@Override
 	protected void addComponents() {
-		panel.setLayout( new GridLayout(4,6));
-		for(int i = 0; i < 8; i++) {
-			panel.add( new JLabel(labelNames[i]));
+		panel.setLayout(
+				new GridLayout(GRIDLAYOUT_ROW_NUMBER,GRIDLAYOUT_COLUMN_NUMBER));
+		for(int i = 0; i < personParametres.length; i++) {
+			panel.add( new JLabel(personParametres[i]));
 			panel.add(personFields[i]);
 			panel.add(checkBoxes[i]);
 		}

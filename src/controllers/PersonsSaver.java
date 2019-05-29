@@ -91,7 +91,7 @@ public class PersonsSaver {
 			while(bookController.getPageNumber() != curPageNumber) {
 				bookController.decreasePageNumber();
 			}
-			//save data to xml-file
+			//save data to XML-file
 			TransformerFactory transfFactory = TransformerFactory.newInstance();
 			Transformer transformerToXML = transfFactory.newTransformer();
 			

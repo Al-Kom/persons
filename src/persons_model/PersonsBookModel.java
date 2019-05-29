@@ -17,13 +17,13 @@ public class PersonsBookModel {
 		persons.add(personModel);
 	}
 
-	public void addEntry(ArrayList<PersonModel> pArr) {
-		persons.add(pArr);
+	public void addEntry(ArrayList<PersonModel> entryList) {
+		persons.add(entryList);
 	}
 
-	public int removeEntry(ArrayList<PersonModel> entryArr) {
+	public int removeEntry(ArrayList<PersonModel> entryList) {
 		int personsBeforeRemoving = persons.size();
-		for(PersonModel p:entryArr) {
+		for(PersonModel p:entryList) {
 			persons.remove(p);
 		}
 		//update page
